@@ -1,0 +1,36 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: ubuntu2204
+    image: ubuntu:22.04
+    command: sleep infinity
+    privileged: true
+
+provisioner:
+  name: ansible
+  inventory:
+    hosts:
+      all:
+        hosts:
+          ubuntu2204:
+            ansible_connection: docker
+  playbooks:
+    create: create.yml
+    destroy: destroy.yml
+    converge: converge.yml
+    verify: verify.yml
+
+verifier:
+  name: ansible
+
+scenario:
+  name: default
+  test_sequence:
+    - destroy
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy

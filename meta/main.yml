@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: vector
+  namespace: artharthur
   author: Arthur Ishmakov
   description: Vector role for log collection and shipping
   license: MIT
@@ -9,6 +11,9 @@ galaxy_info:
       versions:
         - focal
         - jammy
+    - name: EL
+      versions:
+        - "8"
   galaxy_tags:
     - vector
     - logging

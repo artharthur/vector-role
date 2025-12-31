@@ -6,9 +6,16 @@
     state: directory
     mode: '0755'
 
+- name: Create vector data directory
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/vector
+    state: directory
+    mode: '0755'
+
 - name: Download Vector distrib
   ansible.builtin.get_url:
-    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-x86_64-unknown-linux-gnu.tar.gz"
+    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-{{ vector_architecture }}-unknown-linux-gnu.tar.gz"
     dest: "/tmp/vector-{{ vector_version }}.tar.gz"
     mode: '0644'
 
@@ -43,6 +50,7 @@
     dest: /etc/systemd/system/vector.service
     mode: '0644'
   notify: Restart vector service
+  when: ansible_service_mgr == "systemd"
 
 - name: Enable and start Vector service
   become: true
@@ -51,3 +59,4 @@
     enabled: true
     state: started
     daemon_reload: true
+  when: ansible_service_mgr == "systemd"

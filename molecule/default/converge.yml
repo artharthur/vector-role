@@ -1,0 +1,24 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    clickhouse_host: "127.0.0.1"
+    ansible_become: false
+  
+  pre_tasks:
+    - name: Install prerequisites
+      ansible.builtin.raw: |
+        apt-get update
+        apt-get install -y python3 sudo ca-certificates curl
+      changed_when: false
+
+    - name: Gather facts
+      ansible.builtin.setup:
+
+  tasks:
+    - name: Include vector role
+      ansible.builtin.include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
+      vars:
+        ansible_become: true
