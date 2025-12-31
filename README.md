@@ -1,38 +1,47 @@
-Role Name
-=========
+# Vector Role
 
-A brief description of the role goes here.
+Ansible роль для установки и настройки Vector — агента для сбора и отправки логов.
 
-Requirements
-------------
+## Требования
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Ubuntu 20.04/22.04
+- Ansible 2.10+
 
-Role Variables
---------------
+## Переменные
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### defaults/main.yml (можно переопределить)
 
-Dependencies
-------------
+| Переменная | Описание | По умолчанию |
+|------------|----------|--------------|
+| `vector_version` | Версия Vector | `0.41.1` |
+| `vector_install_dir` | Директория установки | `/opt/vector` |
+| `vector_config_dir` | Директория конфигов | `/etc/vector` |
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+### vars/main.yml (внутренние)
 
-Example Playbook
-----------------
+| Переменная | Описание |
+|------------|----------|
+| `vector_config` | Конфигурация sources и sinks |
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### Внешние переменные
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+| Переменная | Описание | По умолчанию |
+|------------|----------|--------------|
+| `clickhouse_host` | IP адрес ClickHouse сервера | `127.0.0.1` |
 
-License
--------
+## Пример использования
+```yaml
+- hosts: vector
+  roles:
+    - vector
+  vars:
+    clickhouse_host: "192.168.1.68"
+```
 
-BSD
+## Лицензия
 
-Author Information
-------------------
+MIT
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Автор
+
+Arthur Ishmakov
