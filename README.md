@@ -16,18 +16,36 @@ Ansible роль для установки и настройки Vector — аг
 | `vector_version` | Версия Vector | `0.41.1` |
 | `vector_install_dir` | Директория установки | `/opt/vector` |
 | `vector_config_dir` | Директория конфигов | `/etc/vector` |
-
-### vars/main.yml (внутренние)
-
-| Переменная | Описание |
-|------------|----------|
-| `vector_config` | Конфигурация sources и sinks |
+| `vector_architecture` | Архитектура (auto) | `x86_64` или `aarch64` |
 
 ### Внешние переменные
 
 | Переменная | Описание | По умолчанию |
 |------------|----------|--------------|
 | `clickhouse_host` | IP адрес ClickHouse сервера | `127.0.0.1` |
+
+## Тестирование
+
+### Molecule
+
+Роль содержит два сценария тестирования:
+
+**default** — тестирование в Docker контейнере:
+```bash
+molecule test
+```
+
+**compatibility** — облегчённый сценарий для tox:
+```bash
+molecule test -s compatibility
+```
+
+### Tox
+
+Запуск тестов через tox:
+```bash
+tox
+```
 
 ## Пример использования
 ```yaml
